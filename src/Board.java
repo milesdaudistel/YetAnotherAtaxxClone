@@ -69,42 +69,34 @@ public class Board {
         current_player = Piece.RED;
     }
 
+    public Board(Board original) {
+        dim = original.dim;
+        board = new Piece[dim][dim];
+        for(int i = 0; i < dim; i++) {
+            for(int j = 0; j < dim; j++) {
+                board[i][j] = original.board[i][j];
+            }
+        }
+        start = original.start;
+        end = original.end;
+        current_player = original.current_player;
+    }
+
     public Piece get(int x, int y) {
         //player sees board as nxn, when really its (n+2*border)(n+2*border)
         //return board[x+border][y+border] unless out of bounds
-        x = x + start;
-        y = y + start;
+        return board[y+start][x+start];
 
-        if (x < start ||
-                y < start ||
-                x >= end ||
-                y >= end ) {
-            throw error("board get index out of bounds");
-        } else {
-            return board[y][x];
-        }
     }
 
     private void set(int x, int y, Piece piece) {
         //player sees board as nxn, when really its (n+2*border)(n+2*border)
         //return board[x+border][y+border] unless out of bounds
-        x = x + start;
-        y = y + start;
-
-        if (x < start ||
-                y < start ||
-                x >= end ||
-                y >= end ) {
-            throw error("board set index out of bounds");
-        } else {
-            board[y][x] = piece;
-        }
+        board[y+start][x+start] = piece;
     }
 
     public void print() {
-        //print border ~~~~~
-        //for square on board print RBX-
-        //print border ~~~~~
+
         System.out.println("~~~~~~~");
         for (int i = start; i < end; i++) {
             String row = "";
@@ -126,13 +118,8 @@ public class Board {
     }
 
     void update(Move move) {
-        //board[move.to.x][move.to.y] = board[move.from.x][move.from.y]
-        //if move is jump: board[move.from.x][move.from.y] = empty
-        //for the 8 spaces around move.to, if space == opposite, space = current_player
-        //just use 2 for loops, make your life easy
-
         can_move(move);
-
+        System.out.println("yes it can move");
         int tx = move.to.x;
         int ty = move.to.y;
 
@@ -161,7 +148,6 @@ public class Board {
         } else {
             return false;
         }
-        //if dx is 2 or dy is 2, its a jump
     }
 
     void can_move(Move move) {
@@ -174,13 +160,23 @@ public class Board {
         Coordinate dxdy = move.dxdy();
         int x = Math.abs(dxdy.x);
         int y = Math.abs(dxdy.y);
-        if (get(move.from.x, move.from.y) != current_player) {
+        if (!is_in_bounds(move.from.x, move.from.y)) {
+            throw error("from index out of bounds");
+        } else if (!is_in_bounds(move.to.x, move.to.y)) {
+            throw error("to index out of bounds");
+        } else if (get(move.from.x, move.from.y) != current_player) {
             throw error("that is not your piece");
         } else if (!valid_move_distance(move)) {
             throw error("move distance invalid");
         } else if (!(get(move.to.x, move.to.y) == Piece.EMPTY)) {
             throw error("that move destination is not empty");
         }
+    }
+
+    boolean is_in_bounds(int x, int y) {
+        x = x + start;
+        y = y + start;
+        return x >= start && y >= start && x < end && y < end;
     }
 
     boolean valid_move_distance(Move move) {

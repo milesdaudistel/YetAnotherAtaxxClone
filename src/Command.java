@@ -9,6 +9,7 @@ public class Command {
     private static final Pattern play = Pattern.compile("play$");
     private static final Pattern help = Pattern.compile("help$");
     private static final Pattern move = Pattern.compile("(move)((\\s)([0-9]+)){4}$");
+    private static final Pattern get = Pattern.compile("(get)((\\s)([0-9]+)){2}$");
     private static final Pattern turn = Pattern.compile("turn$");
     private static final Pattern print = Pattern.compile("print$");
     private static final Pattern quit = Pattern.compile("quit$");
@@ -29,6 +30,9 @@ public class Command {
         } else if (move.matcher(c).matches()) {
             String[] coords = c.split(" ");
             return new Command("move", coords);
+        } else if (get.matcher(c).matches()) {
+            String[] coords = c.split(" ");
+            return new Command("get", coords);
         } else if (turn.matcher(c).matches()) {
             return new Command("turn", null);
         } else if (print.matcher(c).matches()) {

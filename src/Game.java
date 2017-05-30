@@ -4,8 +4,8 @@
 import java.util.Scanner;
 
 public class Game {
+    private Board start_board;
     private Board b;
-    private Piece current_player;
     private Mode mode;
     private Scanner sc;
 
@@ -19,16 +19,14 @@ public class Game {
     Game() {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
-        b = new Board();
-        current_player = Piece.RED;
+        start_board = new Board();
         process();
     }
 
     Game(String[] sb) {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
-        b = new Board(sb);
-        current_player = Piece.RED;
+        start_board = new Board(sb);
         process();
     }
 
@@ -38,7 +36,7 @@ public class Game {
         if (mode == Mode.MENU) {
             switch (commtype) {
                 case "play":
-                    mode = Mode.PLAY;
+                    init_play();
                     break;
                 case "help":
                     System.out.println("lol im not help you");
@@ -71,6 +69,11 @@ public class Game {
                     } catch (MyException e) {
                         System.out.println(e);
                     }
+                    break;
+                case "get":
+                    int x = Integer.parseInt(comm.args[1]);
+                    int y = Integer.parseInt(comm.args[2]);
+                    System.out.println(b.get(x, y));
                     break;
                 case "print":
                     b.print();
@@ -114,5 +117,10 @@ public class Game {
         //System.quit(0);
         //else, gamestate = close
         //what this will do is quit the game if in a game, and quit the application if not in a game
+    }
+
+    void init_play() {
+        b = new Board(start_board);
+        mode = Mode.PLAY;
     }
 }
