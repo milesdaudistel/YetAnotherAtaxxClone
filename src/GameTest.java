@@ -35,4 +35,17 @@ public class GameTest extends Game {
         }
         return true;
     }
+
+    /**
+     *
+     *
+     *
+     * next up:  error handling
+     * then maybe fix your game implementation
+     * leave it as a 2d array
+     * like you thought, its just mapped to a 1d array anyway
+     * so theres no difference in implementation
+     *
+     *
+     */
 }

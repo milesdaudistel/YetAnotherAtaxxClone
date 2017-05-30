@@ -6,11 +6,11 @@ public class Board {
     int dim; //how large the board is
     int start; //first row index not part of left border
     int end; //row index where right border starts
+    Piece current_player;
 
     public Board() {
         //create new board with default size and default border
         //init border to block, all else to empty, put 4 pieces in each corner
-
 
         dim = 10;
         start = 2;
@@ -33,6 +33,8 @@ public class Board {
         board[start][end-1] = Piece.BLUE;
         board[end-1][start] = Piece.BLUE;
         board[end-1][end-1] = Piece.RED;
+
+        current_player = Piece.RED;
     }
 
     public Board(String[] b) {
@@ -48,7 +50,7 @@ public class Board {
             }
         }
 
-        System.out.println("first row length: " + b[0].length());
+        //System.out.println("first row length: " + b[0].length());
 
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length(); j++) {
@@ -63,6 +65,8 @@ public class Board {
                 }
             }
         }
+
+        current_player = Piece.RED;
     }
 
     public Piece get(int x, int y) {
@@ -71,14 +75,11 @@ public class Board {
         x = x + start;
         y = y + start;
 
-        // TODO: 5/24/17
-        //THROW OUT OF BOUNDS EXCEPTION ON INVALID COORDINATE
         if (x < start ||
                 y < start ||
                 x >= end ||
                 y >= end ) {
-            //THROW OUT OF BOUNDS EXCEPTION
-            return Piece.BLOCK;
+            throw error("board get index out of bounds");
         } else {
             return board[y][x];
         }
@@ -90,14 +91,11 @@ public class Board {
         x = x + start;
         y = y + start;
 
-        // TODO: 5/24/17
-        //THROW OUT OF BOUNDS EXCEPTION ON INVALID COORDINATE
         if (x < start ||
                 y < start ||
                 x >= end ||
                 y >= end ) {
-            //THROW OUT OF BOUNDS EXCEPTION
-            System.out.println("piece set failed at x: " + x + " y: " + y);
+            throw error("board set index out of bounds");
         } else {
             board[y][x] = piece;
         }
@@ -132,7 +130,9 @@ public class Board {
         //if move is jump: board[move.from.x][move.from.y] = empty
         //for the 8 spaces around move.to, if space == opposite, space = current_player
         //just use 2 for loops, make your life easy
-        Piece current_player = get(move.from.x, move.from.y);
+
+        can_move(move);
+
         int tx = move.to.x;
         int ty = move.to.y;
 
@@ -150,6 +150,8 @@ public class Board {
                 }
             }
         }
+
+        current_player = current_player.opposite();
     }
 
     boolean is_jump(Move move) {
@@ -162,32 +164,37 @@ public class Board {
         //if dx is 2 or dy is 2, its a jump
     }
 
-    // TODO
-    //throw exception if invalid coordinate
-    boolean is_legal_move(Move move) {
+    void can_move(Move move) {
+        /**
+         * piece must be the current players
+         * both coordinates must be within bounds of board (taken care of in get method)
+         * move.to must be empty
+         * move cant be too long or too short
+         */
         Coordinate dxdy = move.dxdy();
         int x = Math.abs(dxdy.x);
         int y = Math.abs(dxdy.y);
-        if (get(move.to.x, move.to.y) == Piece.EMPTY &&
-                x >= 0 &&
+        if (get(move.from.x, move.from.y) != current_player) {
+            throw error("that is not your piece");
+        } else if (!valid_move_distance(move)) {
+            throw error("move distance invalid");
+        } else if (!(get(move.to.x, move.to.y) == Piece.EMPTY)) {
+            throw error("that move destination is not empty");
+        }
+    }
+
+    boolean valid_move_distance(Move move) {
+        Coordinate dxdy = move.dxdy();
+        int x = Math.abs(dxdy.x);
+        int y = Math.abs(dxdy.y);
+        return x >= 0 &&
                 x <= 2 &&
                 y >= 0 &&
                 y <= 2 &&
-                x + y > 0) {
-            return true;
-        } else {
-            System.out.println("asdfasdfasdf");
-            return false;
-        }
-        //move.from.color ?= current_player
-        //move.to.color ?= empty
-        //|move.from - move.to| <= 2
-        //  just use coordinates dxdy function
-        //move is not out of bounds
-        //  return true;
+                x + y > 0;
     }
 
-    boolean game_over(Piece current_player) {
+    boolean game_over() {
         for (int i = start; i < end; i++) {
             for (int j = start; j < end; j++) {
                 if (get(i, j) == Piece.EMPTY) {
@@ -232,5 +239,8 @@ public class Board {
         }
     }
 
+    MyException error(String message) {
+        return new MyException(message);
+    }
 
 }

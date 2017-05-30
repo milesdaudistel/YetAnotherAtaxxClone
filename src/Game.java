@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Game {
     private Board b;
-    private int dim;
     private Piece current_player;
     private Mode mode;
     private Scanner sc;
@@ -39,7 +38,6 @@ public class Game {
         if (mode == Mode.MENU) {
             switch (commtype) {
                 case "play":
-                    //change mode to play and other stuff
                     mode = Mode.PLAY;
                     break;
                 case "help":
@@ -56,20 +54,22 @@ public class Game {
         } else if (mode == Mode.PLAY) {
             switch (commtype) {
                 case "move":
-
                     Move move = new Move(Integer.parseInt(comm.args[1]),
                             Integer.parseInt(comm.args[2]),
                             Integer.parseInt(comm.args[3]),
                             Integer.parseInt(comm.args[4]));
-                    if (is_valid_move(move)) {
-                        update_game(move);
-                        if (game_over()) {
-                            declare_winner();
+                    try {
+                        //b.can_move(move);
+                        //update should call can_move
+                        //if can_move throws an error, update should throw that error up here
+                        b.update(move);
+                        b.print();
+                        if (b.game_over()) {
+                            b.declare_winner();
                             mode = Mode.MENU;
                         }
-                    } else {
-                        System.out.println("invalid move");
-                        b.print();
+                    } catch (MyException e) {
+                        System.out.println(e);
                     }
                     break;
                 case "print":
@@ -93,19 +93,6 @@ public class Game {
         }
     }
 
-    private void update_game(Move move) {
-        b.update(move);
-        current_player = current_player.opposite();
-    }
-
-    private boolean game_over() {
-        return b.game_over(current_player);
-    }
-
-    void declare_winner() {
-        b.declare_winner();
-    }
-
     Command get_command() {
         System.out.println("Input a command: ");
         Command c = Command.parse_command(sc.nextLine());
@@ -114,28 +101,6 @@ public class Game {
             c = Command.parse_command(sc.nextLine());
         }
         return c;
-    }
-
-
-    // TODO
-    // catch the out of bounds exception if from/to.x/y is not a valid index
-    boolean is_valid_move(Move move) {
-        Coordinate dxdy = move.dxdy();
-        int x = Math.abs(dxdy.x);
-        int y = Math.abs(dxdy.y);
-        System.out.println(b.get(move.from.x, move.from.y));
-        if (b.get(move.from.x, move.from.y) == current_player &&
-                b.is_legal_move(move)) {
-            return true;
-        } else {
-            return false;
-        }
-        //move.from.color ?= current_player
-        //move.to.color ?= empty
-        //|move.from - move.to| <= 2
-        //  just use coordinates dxdy function
-        //move is not out of bounds
-        //  return true;
     }
     
     void quit() {
