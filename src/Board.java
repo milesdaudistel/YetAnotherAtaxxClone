@@ -9,9 +9,6 @@ public class Board {
     Piece current_player;
 
     public Board() {
-        //create new board with default size and default border
-        //init border to block, all else to empty, put 4 pieces in each corner
-
         dim = 10;
         start = 2;
         end = dim - start;
@@ -83,24 +80,32 @@ public class Board {
     }
 
     public Piece get(int x, int y) {
-        //player sees board as nxn, when really its (n+2*border)(n+2*border)
-        //return board[x+border][y+border] unless out of bounds
         return board[y+start][x+start];
-
     }
 
     private void set(int x, int y, Piece piece) {
-        //player sees board as nxn, when really its (n+2*border)(n+2*border)
-        //return board[x+border][y+border] unless out of bounds
         board[y+start][x+start] = piece;
     }
 
     public void print() {
 
         System.out.println("~~~~~~~");
+        String x_axis = "  ";
+        //String barrier = "_";
+        for (int i = 0; i < end - start; i++) {
+            x_axis += i;
+            //barrier += "_";
+        }
+
+        System.out.println(x_axis);
+       // System.out.println(barrier);
+
         for (int i = start; i < end; i++) {
             String row = "";
             for (int j = start; j < end; j++) {
+                if (j == start) {
+                    row += i-start + "|";
+                }
                 if (board[i][j] == Piece.RED) {
                     row += "R";
                 } else if (board[i][j] == Piece.BLUE) {
@@ -119,7 +124,6 @@ public class Board {
 
     void update(Move move) {
         can_move(move);
-        System.out.println("yes it can move");
         int tx = move.to.x;
         int ty = move.to.y;
 
@@ -151,15 +155,6 @@ public class Board {
     }
 
     void can_move(Move move) {
-        /**
-         * piece must be the current players
-         * both coordinates must be within bounds of board (taken care of in get method)
-         * move.to must be empty
-         * move cant be too long or too short
-         */
-        Coordinate dxdy = move.dxdy();
-        int x = Math.abs(dxdy.x);
-        int y = Math.abs(dxdy.y);
         if (!is_in_bounds(move.from.x, move.from.y)) {
             throw error("from index out of bounds");
         } else if (!is_in_bounds(move.to.x, move.to.y)) {
@@ -205,11 +200,6 @@ public class Board {
             }
         }
         return true;
-        //check if either player is unable to move
-        //  meaning enclosed in a box, or there are no pieces of that color on the board
-        //check that there are no empty squares
-        //if any of this is true, tally total of red and blue, declare winner, return true
-        //else return false
     }
 
     void declare_winner() {
@@ -235,8 +225,8 @@ public class Board {
         }
     }
 
-    MyException error(String message) {
-        return new MyException(message);
+    RuntimeException error(String message) {
+        return new RuntimeException(message);
     }
 
 }

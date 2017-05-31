@@ -66,7 +66,7 @@ public class Game {
                             b.declare_winner();
                             mode = Mode.MENU;
                         }
-                    } catch (MyException e) {
+                    } catch (RuntimeException e) {
                         System.out.println(e);
                     }
                     break;
@@ -114,13 +114,11 @@ public class Game {
             mode = Mode.quit;
         }
 
-        //System.quit(0);
-        //else, gamestate = close
-        //what this will do is quit the game if in a game, and quit the application if not in a game
     }
 
     void init_play() {
         b = new Board(start_board);
         mode = Mode.PLAY;
     }
+
 }
