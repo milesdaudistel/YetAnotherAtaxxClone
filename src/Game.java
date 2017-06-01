@@ -1,6 +1,7 @@
 /**
  * Created by miles on 5/20/17.
  */
+import java.io.Reader;
 import java.util.Scanner;
 
 public class Game {
@@ -18,6 +19,13 @@ public class Game {
 
     Game() {
         this.sc = new Scanner(System.in);
+        this.mode = Mode.MENU;
+        start_board = new Board();
+        process();
+    }
+
+    Game(GUI gui) {
+        //this.sc = new Scanner(r);
         this.mode = Mode.MENU;
         start_board = new Board();
         process();
