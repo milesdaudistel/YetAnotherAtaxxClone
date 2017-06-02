@@ -34,6 +34,32 @@ public class Board {
         current_player = Piece.RED;
     }
 
+    public Board(int n) {
+        dim = n;
+        start = 2;
+        end = dim - start;
+        board = new Piece[dim][dim];
+        for(int i = 0; i < dim; i++) {
+            for(int j = 0; j < dim; j++) {
+                if (i < start ||
+                        j < start ||
+                        i >= end ||
+                        j >= end ) {
+                    board[i][j] = Piece.BLOCK;
+                } else {
+                    board[i][j] = Piece.EMPTY;
+                }
+            }
+        }
+
+        board[start][start] = Piece.RED;
+        board[start][end-1] = Piece.BLUE;
+        board[end-1][start] = Piece.BLUE;
+        board[end-1][end-1] = Piece.RED;
+
+        current_player = Piece.RED;
+    }
+
     public Board(String[] b) {
         //set everything to blocks, then reset the other ones later
         start = 2;

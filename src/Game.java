@@ -1,7 +1,8 @@
 /**
  * Created by miles on 5/20/17.
  */
-import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
@@ -9,6 +10,9 @@ public class Game {
     private Board b;
     private Mode mode;
     private Scanner sc;
+    private BufferedReader r;
+    private GUI gui;
+    private boolean useGUI;
 
 
     enum Mode {
@@ -21,13 +25,17 @@ public class Game {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board();
+        useGUI = false;
         process();
     }
 
-    Game(GUI gui) {
+    Game(GUI gui, BufferedReader r, int n) {
         //this.sc = new Scanner(r);
-        this.mode = Mode.MENU;
-        start_board = new Board();
+        this.mode = Mode.PLAY;
+        this.gui = gui;
+        this.r = r;
+        start_board = new Board(n);
+        useGUI = true;
         process();
     }
 
@@ -35,6 +43,7 @@ public class Game {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board(sb);
+        useGUI = false;
         process();
     }
 
@@ -69,7 +78,10 @@ public class Game {
                         //update should call can_move
                         //if can_move throws an error, update should throw that error up here
                         b.update(move);
-                        b.print();
+                        if (!useGUI) {
+                            b.print();
+                        }
+                        gui.update(b);
                         if (b.game_over()) {
                             b.declare_winner();
                             mode = Mode.MENU;
@@ -105,13 +117,26 @@ public class Game {
     }
 
     Command get_command() {
-        System.out.println("Input a command: ");
-        Command c = Command.parse_command(sc.nextLine());
-        while (c.type == "invalid") {
-            System.out.println("command not recognized");
-            c = Command.parse_command(sc.nextLine());
+        if (useGUI) {
+            try {
+                Command c = Command.parse_command(r.readLine());
+                while (c.type == "invalid") {
+                    c = Command.parse_command(r.readLine());
+                }
+                return c;
+            } catch (IOException e) {
+                System.out.println("couldn't parse command");
+                return null;
+            }
+        } else {
+            System.out.println("Input a command: ");
+            Command c = Command.parse_command(sc.nextLine());
+            while (c.type == "invalid") {
+                System.out.println("command not recognized");
+                c = Command.parse_command(sc.nextLine());
+            }
+            return c;
         }
-        return c;
     }
     
     void quit() {

@@ -17,6 +17,11 @@ public class Ataxx {
             uncool = new PipedReader(cool);
             wr = new BufferedWriter(cool);
             re = new BufferedReader(uncool);
+
+            GUI gui = new GUI(wr, 8);
+            System.out.println("ok");
+            Game g = new Game(gui, re, 8);
+            /*
             Scanner k = new Scanner(re);
 
 
@@ -26,6 +31,7 @@ public class Ataxx {
             //wr.write("second time\n");
             System.out.println(re.readLine());
             System.out.println(k.nextLine());
+            */
 
         } catch (IOException e) {
             System.out.println("I/O stream broke");
