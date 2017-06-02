@@ -19,9 +19,22 @@ public class GUI extends JPanel implements ActionListener {
 
     BufferedWriter wr;
 
+    JButton selected_button;
+    JButton[][] button_grid;
+
     public GUI(Writer r, int n) {
         super(new GridLayout(n, n));
         wr = new BufferedWriter(r);
+        selected_button = null;
+        button_grid = new JButton[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                JButton b = new JButton();
+                b.addActionListener(this);
+                add(b);
+                button_grid[i][j] = b;
+            }
+        }
     }
 
     static void make_GUI(Writer r, int n) {
@@ -36,7 +49,21 @@ public class GUI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        return;
+        if (selected_button == null) {
+            //get the button that was pushed, set it to selected button
+            //change the image of selected button to show highlight
+            // TODO
+            // this is probably unsafe.  What if e.getSource() isn't a jbutton?  what then?
+            selected_button = (JButton) e.getSource();
+        } else if (e.getSource() == selected_button) {
+            //
+            //change selected button back to normal image
+            selected_button = null;
+        } else {
+            //give move to game
+            //change selected button back to normal image
+            selected_button = null;
+        }
     }
     /**
      * public GUI(pipedreader, n)
@@ -47,10 +74,8 @@ public class GUI extends JPanel implements ActionListener {
      * actionPerformed:
      * after user has clicked somewhere, put where they clicked into writer
      *
-     * update(move, valid):
-     * update your buttons and stuff
-     * deselect piece that was previously clicked
-     * if valid is true, change the pieces around, if its not, theres no need
-     * all you need is the move.  will be faster than updating the entire board
+     * assumes move is valid
+     * if not, update should not be called
+     * update(move):  updates your buttons and stuff
      */
 }
