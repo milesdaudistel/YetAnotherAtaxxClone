@@ -50,9 +50,9 @@ public class GUI extends JPanel implements ActionListener {
 
         g = new Game(true, re, dim);
 
-        red = new ImageIcon("images/red.png");
-        blue = new ImageIcon("images/blue.png");
-        empty = new ImageIcon("images/empty.png");
+        red = new ImageIcon(this.getClass().getResource("/images/red.png"));
+        blue = new ImageIcon(this.getClass().getResource("/images/blue.png"));
+        empty = new ImageIcon(this.getClass().getResource("/images/empty.png"));
         whoseturn = red;
 
         for (int i = 0; i < dim; i++) {
@@ -86,27 +86,10 @@ public class GUI extends JPanel implements ActionListener {
         JButton button_pushed = (JButton) e.getSource();
         //if we don't have a selection, and the button pushed is not empty
         //else, if we have a selection, and the button pushed is empty
-
         if (selected_button == null && button_pushed.getIcon() == whoseturn) {
-            //get the button that was pushed, set it to selected button
-            //change the image of selected button to show highlight
-            // TODO
-            // this is probably unsafe.  What if e.getSource() isn't a jbutton?  what then?
-
             selected_button = button_pushed;
             selected_button.setEnabled(false);
         } else if (selected_button != null && button_pushed.getIcon() == empty) {
-            //give move to game
-            /*
-            try {
-                wr.write("move " + selected_button.getText() + button_pushed.getText());
-                wr.flush();
-                selected_button.setEnabled(true);
-                selected_button = null;
-            } catch (IOException f) {
-                System.out.println("GUI failed to give move to game");
-            }
-            */
             g.process_gui(this, "move " + selected_button.getText() + " " + button_pushed.getText());
             selected_button.setEnabled(true);
             selected_button = null;
@@ -131,6 +114,8 @@ public class GUI extends JPanel implements ActionListener {
         } else {
             whoseturn = red;
         }
+
+        this.repaint();
     }
     /**
      * public GUI(pipedreader, n)

@@ -30,6 +30,7 @@ public class Game {
         this.mode = Mode.PLAY;
         this.r = r;
         start_board = new Board(n);
+        init_play();
     }
 
     Game(String[] sb) {
@@ -108,6 +109,8 @@ public class Game {
     void process_gui(GUI gui, String command) {
         Command comm = Command.parse_command(command);
         String commtype = comm.type;
+        System.out.println(commtype);
+        System.out.println(comm.args[1] + comm.args[2] + comm.args[3] +comm.args[4]);
         if (mode == Mode.MENU) {
             switch (commtype) {
                 case "play":
@@ -132,9 +135,6 @@ public class Game {
                             Integer.parseInt(comm.args[3]),
                             Integer.parseInt(comm.args[4]));
                     try {
-                        //b.can_move(move);
-                        //update should call can_move
-                        //if can_move throws an error, update should throw that error up here
                         b.update(move);
                         gui.update(b);
                         if (b.game_over()) {
@@ -142,7 +142,7 @@ public class Game {
                             mode = Mode.MENU;
                         }
                     } catch (RuntimeException e) {
-                        System.out.println(e);
+                        System.out.println(e.getCause().toString());
                     }
                     break;
                 case "get":

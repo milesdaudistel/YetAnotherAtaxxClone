@@ -35,8 +35,8 @@ public class Board {
     }
 
     public Board(int n) {
-        dim = n;
         start = 2;
+        dim = n + start*2;
         end = dim - start;
         board = new Piece[dim][dim];
         for(int i = 0; i < dim; i++) {
