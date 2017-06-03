@@ -25,6 +25,7 @@ public class GUI extends JPanel implements ActionListener {
     private ImageIcon blue;
     private ImageIcon empty;
     private ImageIcon whoseturn;
+    private ImageIcon selected;
 
     private Game g;
 
@@ -53,6 +54,7 @@ public class GUI extends JPanel implements ActionListener {
         red = new ImageIcon(this.getClass().getResource("/images/red.png"));
         blue = new ImageIcon(this.getClass().getResource("/images/blue.png"));
         empty = new ImageIcon(this.getClass().getResource("/images/empty.png"));
+        selected = new ImageIcon(this.getClass().getResource("/images/selected.png"));
         whoseturn = red;
 
         for (int i = 0; i < dim; i++) {
@@ -88,10 +90,15 @@ public class GUI extends JPanel implements ActionListener {
         //else, if we have a selection, and the button pushed is empty
         if (selected_button == null && button_pushed.getIcon() == whoseturn) {
             selected_button = button_pushed;
-            selected_button.setEnabled(false);
+            selected_button.setIcon(selected);
+            //selected_button.setEnabled(false);
         } else if (selected_button != null && button_pushed.getIcon() == empty) {
             g.process_gui(this, "move " + selected_button.getText() + " " + button_pushed.getText());
-            selected_button.setEnabled(true);
+            //selected_button.setEnabled(true);
+            selected_button = null;
+        } else if (button_pushed == selected_button) {
+            //selected_button.setEnabled(true);
+            selected_button.setIcon(whoseturn);
             selected_button = null;
         }
     }
