@@ -10,8 +10,7 @@ import javax.swing.JComponent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.ImageIcon;
 
@@ -27,14 +26,29 @@ public class GUI extends JPanel implements ActionListener {
     private ImageIcon empty;
     private ImageIcon whoseturn;
 
+    private Game g;
+
     int dim;
 
-    public GUI(BufferedWriter r, int n) {
+    public GUI(int n) {
         super(new GridLayout(n, n));
+
+        PipedWriter cool = new PipedWriter();
+        PipedReader uncool;
+        try {
+            uncool = new PipedReader(cool);
+        } catch (IOException e) {
+            System.out.println("pipedreader creation failed");
+            return;
+        }
+        wr = new BufferedWriter(cool);
+        BufferedReader re = new BufferedReader(uncool);
+
         dim = n;
-        wr = r;
         selected_button = null;
         button_grid = new JButton[dim][dim];
+
+        g = new Game(true, re, dim);
 
         red = new ImageIcon("images/red.png");
         blue = new ImageIcon("images/blue.png");
@@ -57,10 +71,10 @@ public class GUI extends JPanel implements ActionListener {
 
     }
 
-    static void make_GUI(BufferedWriter r, int n) {
+    static void make_GUI(int n) {
         JFrame jframe = new JFrame("Ataxx");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JComponent gui = new GUI(r, n);
+        JComponent gui = new GUI(n);
         gui.setOpaque(true);
         jframe.setContentPane(gui);
         jframe.pack();
@@ -83,6 +97,7 @@ public class GUI extends JPanel implements ActionListener {
             selected_button.setEnabled(false);
         } else if (selected_button != null && button_pushed.getIcon() == empty) {
             //give move to game
+            /*
             try {
                 wr.write("move " + selected_button.getText() + button_pushed.getText());
                 wr.flush();
@@ -91,6 +106,10 @@ public class GUI extends JPanel implements ActionListener {
             } catch (IOException f) {
                 System.out.println("GUI failed to give move to game");
             }
+            */
+            g.process_gui(this, "move " + selected_button.getText() + " " + button_pushed.getText());
+            selected_button.setEnabled(true);
+            selected_button = null;
         }
     }
 

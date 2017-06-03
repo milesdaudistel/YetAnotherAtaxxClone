@@ -11,8 +11,6 @@ public class Game {
     private Mode mode;
     private Scanner sc;
     private BufferedReader r;
-    private GUI gui;
-    private boolean useGUI;
 
 
     enum Mode {
@@ -25,25 +23,19 @@ public class Game {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board();
-        useGUI = false;
         process();
     }
 
-    Game(GUI gui, BufferedReader r, int n) {
-        //this.sc = new Scanner(r);
+    Game(boolean useGUI, BufferedReader r, int n) {
         this.mode = Mode.PLAY;
-        this.gui = gui;
         this.r = r;
         start_board = new Board(n);
-        useGUI = true;
-        process();
     }
 
     Game(String[] sb) {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board(sb);
-        useGUI = false;
         process();
     }
 
@@ -78,10 +70,7 @@ public class Game {
                         //update should call can_move
                         //if can_move throws an error, update should throw that error up here
                         b.update(move);
-                        if (!useGUI) {
-                            b.print();
-                        }
-                        gui.update(b);
+                        b.print();
                         if (b.game_over()) {
                             b.declare_winner();
                             mode = Mode.MENU;
@@ -116,27 +105,76 @@ public class Game {
         }
     }
 
-    Command get_command() {
-        if (useGUI) {
-            try {
-                Command c = Command.parse_command(r.readLine());
-                while (c.type == "invalid") {
-                    c = Command.parse_command(r.readLine());
-                }
-                return c;
-            } catch (IOException e) {
-                System.out.println("couldn't parse command");
-                return null;
+    void process_gui(GUI gui, String command) {
+        Command comm = Command.parse_command(command);
+        String commtype = comm.type;
+        if (mode == Mode.MENU) {
+            switch (commtype) {
+                case "play":
+                    init_play();
+                    break;
+                case "help":
+                    System.out.println("lol im not help you");
+                    break;
+                case "quit":
+                    quit();
+                    break;
+                default:
+                    System.out.println("invalid command");
+                    break;
             }
-        } else {
-            System.out.println("Input a command: ");
-            Command c = Command.parse_command(sc.nextLine());
-            while (c.type == "invalid") {
-                System.out.println("command not recognized");
-                c = Command.parse_command(sc.nextLine());
+
+        } else if (mode == Mode.PLAY) {
+            switch (commtype) {
+                case "move":
+                    Move move = new Move(Integer.parseInt(comm.args[1]),
+                            Integer.parseInt(comm.args[2]),
+                            Integer.parseInt(comm.args[3]),
+                            Integer.parseInt(comm.args[4]));
+                    try {
+                        //b.can_move(move);
+                        //update should call can_move
+                        //if can_move throws an error, update should throw that error up here
+                        b.update(move);
+                        gui.update(b);
+                        if (b.game_over()) {
+                            b.declare_winner();
+                            mode = Mode.MENU;
+                        }
+                    } catch (RuntimeException e) {
+                        System.out.println(e);
+                    }
+                    break;
+                case "get":
+                    int x = Integer.parseInt(comm.args[1]);
+                    int y = Integer.parseInt(comm.args[2]);
+                    System.out.println(b.get(x, y));
+                    break;
+                case "print":
+                    b.print();
+                    break;
+                case "help":
+                    System.out.println("still not going to help");
+                    break;
+                case "quit":
+                    quit();
+                    System.out.println("leaving current game");
+                    break;
+                default:
+                    System.out.println("invalid command");
+                    break;
             }
-            return c;
         }
+    }
+
+    Command get_command() {
+        System.out.println("Input a command: ");
+        Command c = Command.parse_command(sc.nextLine());
+        while (c.type == "invalid") {
+            System.out.println("command not recognized");
+            c = Command.parse_command(sc.nextLine());
+        }
+        return c;
     }
     
     void quit() {
@@ -152,6 +190,10 @@ public class Game {
     void init_play() {
         b = new Board(start_board);
         mode = Mode.PLAY;
+    }
+
+    public Board board() {
+        return b;
     }
 
 }

@@ -18,9 +18,11 @@ public class Ataxx {
             wr = new BufferedWriter(cool);
             re = new BufferedReader(uncool);
 
+            /*
             GUI gui = new GUI(wr, 8);
             System.out.println("ok");
             Game g = new Game(gui, re, 8);
+            */
             /*
             Scanner k = new Scanner(re);
 
