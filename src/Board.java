@@ -6,19 +6,19 @@ public class Board {
     private int side; //the length of the playable board
     private Piece current_player;
 
-    public Board() {
+    Board() {
         init_board(8);
 
         current_player = Piece.RED;
     }
 
-    public Board(int board_length) {
+    Board(int board_length) {
         init_board(board_length);
 
         current_player = Piece.RED;
     }
 
-    public Board(String[] b) {
+    Board(String[] b) {
         side = b[0].length();
 
         board = new Piece[side][side];
@@ -45,7 +45,7 @@ public class Board {
         current_player = Piece.RED;
     }
 
-    public Board(Board original) {
+    Board(Board original) {
         side = original.side;
 
         board = new Piece[side][side];
@@ -74,7 +74,7 @@ public class Board {
         board[side-1][side-1] = Piece.RED;
     }
 
-    public Piece get(int x, int y) {
+    Piece get(int x, int y) {
         return board[x][y];
     }
 
@@ -82,7 +82,7 @@ public class Board {
         board[x][y] = piece;
     }
 
-    public void print() {
+    void print() {
 
         System.out.println("~~~~~~~");
         String x_axis = "  ";
@@ -143,16 +143,12 @@ public class Board {
         return x >= 0 && x < side && y >= 0 && y < side;
     }
 
-    boolean is_jump(Move move) {
+    private boolean is_jump(Move move) {
         Coordinate dxdy = move.dxdy();
-        if (Math.abs(dxdy.x) == 2 || Math.abs(dxdy.y) == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return Math.abs(dxdy.x) == 2 || Math.abs(dxdy.y) == 2;
     }
 
-    void can_move(Move move) {
+    private void can_move(Move move) {
         if (get(move.from.x, move.from.y) != current_player) {
             throw error("that is not your piece");
         } else if (!valid_move_distance(move)) {
@@ -162,7 +158,7 @@ public class Board {
         }
     }
 
-    boolean valid_move_distance(Move move) {
+    private boolean valid_move_distance(Move move) {
         Coordinate dxdy = move.dxdy();
         int x = Math.abs(dxdy.x);
         int y = Math.abs(dxdy.y);
@@ -213,7 +209,7 @@ public class Board {
         }
     }
 
-    RuntimeException error(String message) {
+    private RuntimeException error(String message) {
         return new RuntimeException(message);
     }
 
