@@ -23,7 +23,7 @@ public class GameTest extends Game {
     }
 
     public static void main(String[] args) {
-        test2();
+        test1();
     }
 
     static boolean test_square(String[] board) {

@@ -125,16 +125,6 @@ public class GUI extends JPanel implements ActionListener {
         this.repaint();
     }
     /**
-     * public GUI(pipedreader, n)
-     * creates a pipedwriter to connect to pipedreader
-     * create buttons in nxn grid
-     *
-     *
-     * actionPerformed:
-     * after user has clicked somewhere, put where they clicked into writer
-     *
-     * assumes move is valid
-     * if not, update should not be called
-     * update(move):  updates your buttons and stuff
+     * instead of using buttons on a gridlayout, we'll use a set of images
      */
 }

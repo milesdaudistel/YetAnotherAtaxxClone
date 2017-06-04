@@ -2,7 +2,6 @@
  * Created by miles on 5/20/17.
  */
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
