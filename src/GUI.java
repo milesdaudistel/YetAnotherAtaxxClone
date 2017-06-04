@@ -21,7 +21,11 @@ public class GUI extends JPanel implements ActionListener {
     private JButton selected_button;
     private JButton[][] button_grid;
 
-
+    private ImageIcon red;
+    private ImageIcon blue;
+    private ImageIcon empty;
+    private ImageIcon whoseturn;
+    private ImageIcon selected;
 
     private Game g;
 
