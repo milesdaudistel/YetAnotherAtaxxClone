@@ -149,7 +149,10 @@ public class Board {
     }
 
     private void can_move(Move move) {
-        if (get(move.from.x, move.from.y) != current_player) {
+        if (!in_bounds(move.from.x, move.from.y) ||
+                !in_bounds(move.to.x, move.to.y) ) {
+            throw error("move out of bounds");
+        } else if (get(move.from.x, move.from.y) != current_player) {
             throw error("that is not your piece");
         } else if (!valid_move_distance(move)) {
             throw error("move distance invalid");
