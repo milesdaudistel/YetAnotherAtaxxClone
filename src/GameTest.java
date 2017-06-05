@@ -22,8 +22,12 @@ public class GameTest extends Game {
         Game g = new Game(board2);
     }
 
+    static void randomtest() {
+        System.out.println(5/4);
+    }
+
     public static void main(String[] args) {
-        test1();
+        randomtest();
     }
 
     static boolean test_square(String[] board) {

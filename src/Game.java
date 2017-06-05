@@ -191,8 +191,16 @@ public class Game {
         mode = Mode.PLAY;
     }
 
-    public Board board() {
+    Board board() {
         return b;
+    }
+
+    Piece whoseturn() {
+        return b.whoseturn();
+    }
+
+    Piece get(int x, int y) {
+        return b.get(x, y);
     }
 
 }

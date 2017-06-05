@@ -212,6 +212,10 @@ public class Board {
         }
     }
 
+    Piece whoseturn() {
+        return current_player;
+    }
+
     private RuntimeException error(String message) {
         return new RuntimeException(message);
     }

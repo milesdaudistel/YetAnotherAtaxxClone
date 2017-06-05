@@ -1,38 +1,41 @@
 /**
  * Created by miles on 5/31/17.
  */
+
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 import java.io.*;
 
-import javax.swing.ImageIcon;
+import javax.imageio.*;
 
-public class GUI extends JPanel implements ActionListener {
+import java.awt.image.BufferedImage;
+
+public class GUI extends JPanel implements MouseListener {
 
     private BufferedWriter wr;
 
-    private JButton selected_button;
-    private JButton[][] button_grid;
+    private Coordinate selected;
 
-    private ImageIcon red;
-    private ImageIcon blue;
-    private ImageIcon empty;
-    private ImageIcon whoseturn;
-    private ImageIcon selected;
+    private BufferedImage red;
+    private BufferedImage blue;
+    private BufferedImage empty;
+    private BufferedImage selected;
 
     private Game g;
 
-    int dim;
+    private int side;
+    private int width;
+    private int height;
 
-    public GUI(int n) {
-        super(new GridLayout(n, n));
+    public GUI(int board_length) {
+        super(new GridLayout(board_length, board_length));
 
         PipedWriter cool = new PipedWriter();
         PipedReader uncool;
@@ -45,20 +48,32 @@ public class GUI extends JPanel implements ActionListener {
         wr = new BufferedWriter(cool);
         BufferedReader re = new BufferedReader(uncool);
 
-        dim = n;
-        selected_button = null;
-        button_grid = new JButton[dim][dim];
+        side = board_length;
+        selected = null;
+        button_grid = new JButton[side][side];
 
-        g = new Game(true, re, dim);
+        g = new Game(true, re, side);
 
-        red = new ImageIcon(this.getClass().getResource("/images/red.png"));
-        blue = new ImageIcon(this.getClass().getResource("/images/blue.png"));
-        empty = new ImageIcon(this.getClass().getResource("/images/empty.png"));
-        selected = new ImageIcon(this.getClass().getResource("/images/selected.png"));
-        whoseturn = red;
+        try {
+            height = this.getHeight();
+            width = this.getWidth();
 
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
+            red = ImageIO.read(new File("images/red.png"));
+            red = (BufferedImage) red.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+            blue = ImageIO.read(new File("images/blue.png"));
+            blue = (BufferedImage) blue.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+            empty = ImageIO.read(new File("images/empty.png"));
+            empty = (BufferedImage) empty.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        } catch (IOException e) {
+            //kill self
+            return;
+        }
+
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
                 JButton b = new JButton(i + " " + j, empty);
                 b.addActionListener(this);
                 add(b);
@@ -67,15 +82,19 @@ public class GUI extends JPanel implements ActionListener {
         }
 
         button_grid[0][0].setIcon(red);
-        button_grid[0][dim-1].setIcon(blue);
-        button_grid[dim-1][0].setIcon(blue);
-        button_grid[dim-1][dim-1].setIcon(red);
+        button_grid[0][side-1].setIcon(blue);
+        button_grid[side-1][0].setIcon(blue);
+        button_grid[side-1][side-1].setIcon(red);
+
+
 
     }
+
 
     static void make_GUI(int n) {
         JFrame jframe = new JFrame("Ataxx");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setResizable(false);
         JComponent gui = new GUI(n);
         gui.setOpaque(true);
         jframe.setContentPane(gui);
@@ -83,29 +102,37 @@ public class GUI extends JPanel implements ActionListener {
         jframe.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton button_pushed = (JButton) e.getSource();
-        //if we don't have a selection, and the button pushed is not empty
-        //else, if we have a selection, and the button pushed is empty
-        if (selected_button == null && button_pushed.getIcon() == whoseturn) {
-            selected_button = button_pushed;
-            selected_button.setIcon(selected);
-            //selected_button.setEnabled(false);
-        } else if (selected_button != null && button_pushed.getIcon() == empty) {
-            g.process_gui(this, "move " + selected_button.getText() + " " + button_pushed.getText());
-            //selected_button.setEnabled(true);
-            selected_button = null;
-        } else if (button_pushed == selected_button) {
-            //selected_button.setEnabled(true);
-            selected_button.setIcon(whoseturn);
-            selected_button = null;
+    public void mousePressed(MouseEvent e) {
+        Coordinate xy = location_to_index(e.getX(), e.getY());
+        int x = xy.x;
+        int y = xy.y;
+        
+        if (selected == null && board().get(x, y) == g.g.whoseturn()()) {
+            selected = button_pushed;
+            selected.setIcon(selected);
+            //selected.setEnabled(false);
+        } else if (selected != null && button_pushed.getIcon() == empty) {
+            g.process_gui(this, "move " + selected.getText() + " " + button_pushed.getText());
+            //selected.setEnabled(true);
+            selected = null;
+        } else if (button_pushed == selected) {
+            //selected.setEnabled(true);
+            selected.setIcon(g.whoseturn());
+            selected = null;
         }
     }
 
+    public void mouseReleased(MouseEvent e) {}
+
+    public void mouseEntered(MouseEvent e) {}
+
+    public void mouseExited(MouseEvent e) {}
+
+    public void mouseClicked(MouseEvent e) {}
+
     void update(Board board) {
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
                 if (board.get(i, j) == Piece.EMPTY) {
                     button_grid[i][j].setIcon(empty);
                 } else if (board.get(i, j) == Piece.RED) {
@@ -116,15 +143,28 @@ public class GUI extends JPanel implements ActionListener {
             }
         }
 
-        if (whoseturn == red) {
-            whoseturn = blue;
+        if (g.whoseturn() == red) {
+            g.whoseturn() = blue;
         } else {
-            whoseturn = red;
+            g.whoseturn() = red;
         }
 
         this.repaint();
     }
-    /**
-     * instead of using buttons on a gridlayout, we'll use a set of images
-     */
+
+    Coordinate location_to_index(int x, int y) {
+        return new Coordinate(x / side, y / side);
+    }
+
+    Coordinate index_to_location(int x, int y) {
+        return new Coordinate((x * width) / side, (y * height) / side);
+    }
+
+    Board board() {
+        return g.board();
+    }
 }
+
+/**
+ * Game class no longer needed?
+ */
