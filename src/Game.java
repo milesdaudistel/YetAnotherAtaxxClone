@@ -1,6 +1,7 @@
 /**
  * Created by miles on 5/20/17.
  */
+
 import java.io.BufferedReader;
 import java.util.Scanner;
 
@@ -135,7 +136,7 @@ public class Game {
                             Integer.parseInt(comm.args[4]));
                     try {
                         b.update(move);
-                        gui.update(b);
+                        //gui.update(b);
                         if (b.game_over()) {
                             b.declare_winner();
                             mode = Mode.MENU;

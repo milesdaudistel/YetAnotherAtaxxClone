@@ -4,18 +4,18 @@
 public class Board {
     private Piece[][] board; //contains the pieces
     private int side; //the length of the playable board
-    private Piece current_player;
+    private Piece whoseturn;
 
     Board() {
         init_board(8);
 
-        current_player = Piece.RED;
+        whoseturn = Piece.RED;
     }
 
     Board(int board_length) {
         init_board(board_length);
 
-        current_player = Piece.RED;
+        whoseturn = Piece.RED;
     }
 
     Board(String[] b) {
@@ -42,7 +42,7 @@ public class Board {
             }
         }
 
-        current_player = Piece.RED;
+        whoseturn = Piece.RED;
     }
 
     Board(Board original) {
@@ -55,7 +55,7 @@ public class Board {
             }
         }
 
-        current_player = original.current_player;
+        whoseturn = original.whoseturn;
     }
 
     private void init_board(int side_len) {
@@ -130,13 +130,13 @@ public class Board {
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
                 if (in_bounds(tx+x, ty+y) &&
-                        get(tx+x, ty+y) == current_player.opposite()) {
-                    set(tx+x, ty+y, current_player);
+                        get(tx+x, ty+y) == whoseturn.opposite()) {
+                    set(tx+x, ty+y, whoseturn);
                 }
             }
         }
 
-        current_player = current_player.opposite();
+        whoseturn = whoseturn.opposite();
     }
 
     private boolean in_bounds(int x, int y) {
@@ -152,7 +152,7 @@ public class Board {
         if (!in_bounds(move.from.x, move.from.y) ||
                 !in_bounds(move.to.x, move.to.y) ) {
             throw error("move out of bounds");
-        } else if (get(move.from.x, move.from.y) != current_player) {
+        } else if (get(move.from.x, move.from.y) != whoseturn) {
             throw error("that is not your piece");
         } else if (!valid_move_distance(move)) {
             throw error("move distance invalid");
@@ -178,7 +178,7 @@ public class Board {
                 if (get(i, j) == Piece.EMPTY) {
                     for (int x = -2; x <= 2; x++) {
                         for (int y = -2; y <= 2; y++) {
-                            if (get(i+x, j+y) == current_player) {
+                            if (get(i+x, j+y) == whoseturn) {
                                 return false;
                             }
                         }
@@ -213,7 +213,7 @@ public class Board {
     }
 
     Piece whoseturn() {
-        return current_player;
+        return whoseturn;
     }
 
     private RuntimeException error(String message) {
