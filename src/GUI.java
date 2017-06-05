@@ -26,8 +26,6 @@ public class GUI extends JPanel implements MouseListener {
     private Board board;
 
     private int side;
-    private int width;
-    private int height;
 
     public GUI(int board_length) {
         super(new GridLayout(board_length, board_length));
@@ -35,16 +33,35 @@ public class GUI extends JPanel implements MouseListener {
         side = board_length;
         from = null;
         board = new Board(board_length);
-        add(new JButton());
-        //THE JPANEL WORKS, DUNNO WHATS WRONG
 
+    }
+
+
+    static void make_GUI(int n) {
+        //pack lets the layout manager take care of sizing
+        //you can either setpreferredsize and then pack, or explicity setsize and dont pack
+        JFrame jframe = new JFrame("Ataxx");
+        jframe.setPreferredSize(new Dimension(400, 400));
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        GUI gui = new GUI(n);
+        jframe.getContentPane().add(gui);
+        jframe.setResizable(false);
+        jframe.pack();
+        //gui.scale_board_image();
+        jframe.setVisible(true);
+    }
+
+    void scale_board_image() {
         try {
-            height = this.getHeight();
-            width = this.getWidth();
-
-            red = ImageIO.read(new File("images/red.png"));
-            red = (BufferedImage) red.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            int height = this.getHeight();
+            int width = this.getWidth();
             System.out.println("ok");
+            System.out.println(height);
+            red = ImageIO.read(new File("images/red.png"));
+            System.out.println(red.getHeight());
+            red = (BufferedImage) red.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
 
             blue = ImageIO.read(new File("images/blue.png"));
             blue = (BufferedImage) blue.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -58,23 +75,8 @@ public class GUI extends JPanel implements MouseListener {
             return;
         }
 
+        repaint();
     }
-
-
-    static void make_GUI(int n) {
-        JFrame jframe = new JFrame("Ataxx");
-        jframe.setPreferredSize(new Dimension(400, 400));
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JComponent gui = new GUI(n);
-        gui.setSize(200, 200);
-        gui.setOpaque(true);
-        jframe.setContentPane(gui);
-        jframe.setResizable(false);
-        jframe.pack();
-        jframe.setVisible(true);
-    }
-
     public void mousePressed(MouseEvent e) {
         Coordinate clicked = location_to_index(e.getX(), e.getY());
         int x = clicked.x;
@@ -101,7 +103,22 @@ public class GUI extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {}
 
     public void paintComponent(Graphics g) {
-        g.drawImage(red, 0, 0, this);
+        //g.drawImage(red, 0, 0, this);
+        g.drawOval(0, 0, 50, 50);
+        paint_grid(g);
+    }
+
+    public void paint_grid(Graphics g) {
+        //number of horizontal/vertical lines to draw is side-1
+        for (int i = 0; i < side; i++) {
+            int temp = (this.getWidth() * i) / side;
+            g.drawLine(temp, 0, temp, this.getWidth());
+            g.drawLine(0, temp, this.getHeight(), temp);
+        }
+    }
+
+    public void paint_pieces(Graphics g) {
+
     }
 /*
     void update(Board board) {
@@ -124,7 +141,7 @@ public class GUI extends JPanel implements MouseListener {
     }
 
     Coordinate index_to_location(int x, int y) {
-        return new Coordinate((x * width) / side, (y * height) / side);
+        return new Coordinate((x * this.getWidth()) / side, (y * this.getHeight()) / side);
     }
 
 }
