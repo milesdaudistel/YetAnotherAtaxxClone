@@ -5,22 +5,12 @@
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.awt.Graphics;
-
-import java.io.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JComponent;
-import javax.imageio.*;
-
-import javax.swing.JButton;
 
 public class GUI extends JPanel implements MouseListener {
-    private BufferedImage red;
-    private BufferedImage blue;
-    private BufferedImage empty;
     private Coordinate from;
 
     private Board board;
@@ -29,7 +19,7 @@ public class GUI extends JPanel implements MouseListener {
 
     private int piece_diameter;
 
-    public GUI(int board_length) {
+    private GUI(int board_length) {
         super(new GridLayout(board_length, board_length));
 
         side = board_length;
@@ -61,7 +51,6 @@ public class GUI extends JPanel implements MouseListener {
         Coordinate clicked = location_to_index(e.getX(), e.getY());
         int x = clicked.x;
         int y = clicked.y;
-        System.out.println("x: " + x + " y: " + y);
         
         if (from == null && board.get(x, y) == board.whoseturn()) {
             from = clicked;
@@ -92,7 +81,7 @@ public class GUI extends JPanel implements MouseListener {
         paint_pieces(g);
     }
 
-    void paint_grid(Graphics g) {
+    private void paint_grid(Graphics g) {
         //number of horizontal/vertical lines to draw is side-1
         for (int i = 0; i < side; i++) {
             int temp = (this.getWidth() * i) / side;
@@ -102,7 +91,7 @@ public class GUI extends JPanel implements MouseListener {
         }
     }
 
-    void paint_pieces(Graphics g) {
+    private void paint_pieces(Graphics g) {
         for (int j = 0; j < side; j++) {
             for (int i = 0; i < side; i++) {
                 if (board.get(i, j) == Piece.RED) {
@@ -114,6 +103,8 @@ public class GUI extends JPanel implements MouseListener {
                     Coordinate location = index_to_location(i, j);
                     g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
                 } else if (board.get(i, j) == Piece.EMPTY) {
+                    //this erases parts of the default light gray color of the jpanel, but it looks
+                    //cool, so its a feature.  kind of reminds me of connect 4
                     g.setColor(Color.white);
                     Coordinate location = index_to_location(i, j);
                     g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
@@ -127,20 +118,16 @@ public class GUI extends JPanel implements MouseListener {
         }
     }
 
-    void init_piece_diameter() {
+    private void init_piece_diameter() {
         piece_diameter = this.getWidth() / side;
     }
 
-    Coordinate location_to_index(int x, int y) {
+    private Coordinate location_to_index(int x, int y) {
         return new Coordinate(x / piece_diameter, y / piece_diameter);
     }
 
-    Coordinate index_to_location(int x, int y) {
+    private Coordinate index_to_location(int x, int y) {
         return new Coordinate((x * this.getWidth()) / side, (y * this.getHeight()) / side);
     }
 
 }
-
-/**
- * Game class no longer needed?
- */
