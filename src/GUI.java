@@ -59,7 +59,7 @@ public class GUI extends JPanel implements MouseListener {
             board.update(new Move(from, clicked));
             from = null;
             repaint();
-        } else if (from == clicked) {
+        } else if (from.x == clicked.x && from.y == clicked.y) {
             from = null;
             repaint();
         }
@@ -75,8 +75,6 @@ public class GUI extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {}
 
     public void paintComponent(Graphics g) {
-        //g.drawImage(red, 0, 0, this);
-        //g.drawOval(0, 0, 50, 50);
         paint_grid(g);
         paint_pieces(g);
     }
@@ -94,21 +92,19 @@ public class GUI extends JPanel implements MouseListener {
     private void paint_pieces(Graphics g) {
         for (int j = 0; j < side; j++) {
             for (int i = 0; i < side; i++) {
+                Coordinate location = index_to_location(i, j);
+
                 if (board.get(i, j) == Piece.RED) {
                     g.setColor(Color.red);
-                    Coordinate location = index_to_location(i, j);
-                    g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
                 } else if (board.get(i, j) == Piece.BLUE) {
                     g.setColor(Color.blue);
-                    Coordinate location = index_to_location(i, j);
-                    g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
                 } else if (board.get(i, j) == Piece.EMPTY) {
                     //this erases parts of the default light gray color of the jpanel, but it looks
                     //cool, so its a feature.  kind of reminds me of connect 4
                     g.setColor(Color.white);
-                    Coordinate location = index_to_location(i, j);
-                    g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
                 }
+
+                g.fillOval(location.x, location.y, piece_diameter, piece_diameter);
             }
         }
         if (from != null) {
