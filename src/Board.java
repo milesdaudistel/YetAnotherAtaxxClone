@@ -1,8 +1,11 @@
 /**
  * Created by miles on 5/24/17.
  */
+import java.util.Stack;
+
 public class Board {
     private Piece[][] board; //contains the pieces
+    private Stack<Piece[][]> boards;
     private int side; //the length of the playable board
     private Piece whoseturn;
 
@@ -47,15 +50,9 @@ public class Board {
 
     Board(Board original) {
         side = original.side;
-
-        board = new Piece[side][side];
-        for(int i = 0; i < side; i++) {
-            for(int j = 0; j < side; j++) {
-                board[i][j] = original.board[i][j];
-            }
-        }
-
         whoseturn = original.whoseturn;
+        board = matrix_copy(original.board);
+        boards = new Stack<Piece[][]>();
     }
 
     private void init_board(int side_len) {
@@ -76,6 +73,10 @@ public class Board {
 
     Piece get(int x, int y) {
         return board[x][y];
+    }
+
+    Piece get(Coordinate index) {
+        return board[index.x][index.y];
     }
 
     private void set(int x, int y, Piece piece) {
@@ -136,6 +137,41 @@ public class Board {
             }
         }
 
+        whoseturn = whoseturn.opposite();
+
+        if (game_over()) {
+            declare_winner();
+        }
+    }
+
+    void update_AI(Move move) {
+        can_move(move);
+        boards.push(board);
+        board = java.util.Arrays.copyOf(board, board.length);
+        int tx = move.to.x;
+        int ty = move.to.y;
+
+        int fx = move.from.x;
+        int fy = move.from.y;
+
+        set(tx, ty, get(fx, fy));
+        if (is_jump(move)) {
+            set(fx, fy, Piece.EMPTY);
+        }
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (in_bounds(tx+x, ty+y) &&
+                        get(tx+x, ty+y) == whoseturn.opposite()) {
+                    set(tx+x, ty+y, whoseturn);
+                }
+            }
+        }
+
+        whoseturn = whoseturn.opposite();
+    }
+
+    void undo() {
+        board = boards.pop();
         whoseturn = whoseturn.opposite();
     }
 
@@ -216,8 +252,36 @@ public class Board {
         return whoseturn;
     }
 
+    int length() {
+        return side;
+    }
+
     private RuntimeException error(String message) {
         return new RuntimeException(message);
+    }
+
+    int current_score() {
+        int current_score = 0;
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
+                if (get(i, j) == Piece.RED) {
+                    current_score++;
+                } else if (get(i, j) == Piece.BLUE) {
+                    current_score--;
+                }
+            }
+        }
+        return current_score;
+    }
+
+    private Piece[][] matrix_copy(Piece[][] original) {
+        Piece[][] b = new Piece[side][side];
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
+                b[i][j] = original[i][j];
+            }
+        }
+        return b;
     }
 
 }

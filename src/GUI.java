@@ -48,18 +48,16 @@ public class GUI extends JPanel implements MouseListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        Coordinate clicked = location_to_index(e.getX(), e.getY());
-        int x = clicked.x;
-        int y = clicked.y;
-        
-        if (from == null && board.get(x, y) == board.whoseturn()) {
-            from = clicked;
+        Coordinate selected = location_to_index(e.getX(), e.getY());
+
+        if (from == null && board.get(selected) == board.whoseturn()) {
+            from = selected;
             repaint();
-        } else if (from != null && board.get(x, y) == Piece.EMPTY) {
-            board.update(new Move(from, clicked));
+        } else if (from != null && board.get(selected) == Piece.EMPTY) {
+            board.update(new Move(from, selected));
             from = null;
             repaint();
-        } else if (from.x == clicked.x && from.y == clicked.y) {
+        } else if (from.equals(selected)) {
             from = null;
             repaint();
         }
