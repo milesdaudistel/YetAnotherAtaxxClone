@@ -2,15 +2,13 @@
  * Created by miles on 5/20/17.
  */
 
-import java.io.BufferedReader;
 import java.util.Scanner;
 
-public class Game {
+public class CLI {
     private Board start_board;
     private Board b;
     private Mode mode;
     private Scanner sc;
-    private BufferedReader r;
 
 
     enum Mode {
@@ -19,21 +17,14 @@ public class Game {
         quit
     }
 
-    Game() {
+    CLI() {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board();
         process();
     }
 
-    Game(boolean useGUI, BufferedReader r, int n) {
-        this.mode = Mode.PLAY;
-        this.r = r;
-        start_board = new Board(n);
-        init_play();
-    }
-
-    Game(String[] sb) {
+    CLI(String[] sb) {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board(sb);
@@ -106,67 +97,6 @@ public class Game {
         }
     }
 
-    void process_gui(GUI gui, String command) {
-        Command comm = Command.parse_command(command);
-        String commtype = comm.type;
-        System.out.println(commtype);
-        System.out.println(comm.args[1] + comm.args[2] + comm.args[3] +comm.args[4]);
-        if (mode == Mode.MENU) {
-            switch (commtype) {
-                case "play":
-                    init_play();
-                    break;
-                case "help":
-                    System.out.println("lol im not help you");
-                    break;
-                case "quit":
-                    quit();
-                    break;
-                default:
-                    System.out.println("invalid command");
-                    break;
-            }
-
-        } else if (mode == Mode.PLAY) {
-            switch (commtype) {
-                case "move":
-                    Move move = new Move(Integer.parseInt(comm.args[1]),
-                            Integer.parseInt(comm.args[2]),
-                            Integer.parseInt(comm.args[3]),
-                            Integer.parseInt(comm.args[4]));
-                    try {
-                        b.update(move);
-                        //gui.update(b);
-                        if (b.game_over()) {
-                            b.declare_winner();
-                            mode = Mode.MENU;
-                        }
-                    } catch (RuntimeException e) {
-                        System.out.println(e.getCause().toString());
-                    }
-                    break;
-                case "get":
-                    int x = Integer.parseInt(comm.args[1]);
-                    int y = Integer.parseInt(comm.args[2]);
-                    System.out.println(b.get(x, y));
-                    break;
-                case "print":
-                    b.print();
-                    break;
-                case "help":
-                    System.out.println("still not going to help");
-                    break;
-                case "quit":
-                    quit();
-                    System.out.println("leaving current game");
-                    break;
-                default:
-                    System.out.println("invalid command");
-                    break;
-            }
-        }
-    }
-
     Command get_command() {
         System.out.println("Input a command: ");
         Command c = Command.parse_command(sc.nextLine());
@@ -190,18 +120,6 @@ public class Game {
     void init_play() {
         b = new Board(start_board);
         mode = Mode.PLAY;
-    }
-
-    Board board() {
-        return b;
-    }
-
-    Piece whoseturn() {
-        return b.whoseturn();
-    }
-
-    Piece get(int x, int y) {
-        return b.get(x, y);
     }
 
 }

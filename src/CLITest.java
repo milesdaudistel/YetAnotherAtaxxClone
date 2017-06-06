@@ -2,14 +2,14 @@
  * Created by miles on 5/24/17.
  */
 
-public class GameTest extends Game {
+public class CLITest extends CLI {
     static void test1() {
         String[] board1 = {"RR",
         "R-"};
         if (!test_square(board1)) {
             System.out.println("SCREEEEEEEEEEECH");
         }
-        Game g = new Game(board1);
+        CLI g = new CLI(board1);
     }
 
     static void test2() {
@@ -20,7 +20,7 @@ public class GameTest extends Game {
         if (!test_square(board2)) {
             System.out.println("SCREEEEEEEEEEECH");
         }
-        Game g = new Game(board2);
+        CLI g = new CLI(board2);
     }
 
     static void randomtest() {

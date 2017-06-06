@@ -223,32 +223,12 @@ public class Board {
         return b;
     }
 
-    private boolean in_bounds(int x, int y) {
-        return x >= 0 && x < side && y >= 0 && y < side;
-    }
-
-    private boolean is_jump(Move move) {
-        Coordinate dxdy = move.dxdy();
-        return Math.abs(dxdy.x) == 2 || Math.abs(dxdy.y) == 2;
-    }
-
     boolean valid_move(Move move) {
         return in_bounds(move.from.x, move.from.y) &&
                 in_bounds(move.to.x, move.to.y) &&
                 get(move.from.x, move.from.y) == whoseturn &&
                 get(move.to.x, move.to.y) == Piece.EMPTY &&
                 valid_move_distance(move);
-    }
-
-    private boolean valid_move_distance(Move move) {
-        Coordinate dxdy = move.dxdy();
-        int x = Math.abs(dxdy.x);
-        int y = Math.abs(dxdy.y);
-        return x >= 0 &&
-                x <= 2 &&
-                y >= 0 &&
-                y <= 2 &&
-                x + y > 0;
     }
 
     boolean game_over() {
@@ -268,12 +248,28 @@ public class Board {
         return true;
     }
 
-    int length() {
-        return side;
+    private boolean valid_move_distance(Move move) {
+        Coordinate dxdy = move.dxdy();
+        int x = Math.abs(dxdy.x);
+        int y = Math.abs(dxdy.y);
+        return x >= 0 &&
+                x <= 2 &&
+                y >= 0 &&
+                y <= 2 &&
+                x + y > 0;
     }
 
-    private RuntimeException error(String message) {
-        return new RuntimeException(message);
+    private boolean in_bounds(int x, int y) {
+        return x >= 0 && x < side && y >= 0 && y < side;
+    }
+
+    private boolean is_jump(Move move) {
+        Coordinate dxdy = move.dxdy();
+        return Math.abs(dxdy.x) == 2 || Math.abs(dxdy.y) == 2;
+    }
+
+    int length() {
+        return side;
     }
 
     int get_score() {
@@ -288,6 +284,10 @@ public class Board {
             }
         }
         return current_score;
+    }
+
+    private RuntimeException error(String message) {
+        return new RuntimeException(message);
     }
 
 }
