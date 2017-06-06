@@ -13,12 +13,14 @@ public class Board {
         init_board(8);
 
         whoseturn = Piece.RED;
+        //boards = new Stack<Piece[][]>();
     }
 
     Board(int board_length) {
         init_board(board_length);
 
         whoseturn = Piece.RED;
+        //boards = new Stack<Piece[][]>();
     }
 
     Board(String[] b) {
@@ -46,6 +48,7 @@ public class Board {
         }
 
         whoseturn = Piece.RED;
+        //boards = new Stack<Piece[][]>();
     }
 
     Board(Board original) {
@@ -53,34 +56,6 @@ public class Board {
         whoseturn = original.whoseturn;
         board = matrix_copy(original.board);
         boards = new Stack<Piece[][]>();
-    }
-
-    private void init_board(int side_len) {
-        side = side_len;
-
-        board = new Piece[side][side];
-        for(int i = 0; i < side; i++) {
-            for(int j = 0; j < side; j++) {
-                board[i][j] = Piece.EMPTY;
-            }
-        }
-
-        board[0][0] = Piece.RED;
-        board[0][side-1] = Piece.BLUE;
-        board[side-1][0] = Piece.BLUE;
-        board[side-1][side-1] = Piece.RED;
-    }
-
-    Piece get(int x, int y) {
-        return board[x][y];
-    }
-
-    Piece get(Coordinate index) {
-        return board[index.x][index.y];
-    }
-
-    private void set(int x, int y, Piece piece) {
-        board[x][y] = piece;
     }
 
     void print() {
@@ -173,12 +148,79 @@ public class Board {
     }
 
     void call_AI() {
-        update_AI(AI.find_move(this));
+        //update_AI(AI.find_move(this));
+        Move move = AI.find_move(this);
+        update(move);
     }
 
     void undo() {
         board = boards.pop();
         whoseturn = whoseturn.opposite();
+    }
+
+    void declare_winner() {
+        int red_count = 0;
+        int blue_count = 0;
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
+                if (get(i, j) == Piece.RED) {
+                    red_count++;
+                } else if (get(i, j) == Piece.BLUE) {
+                    blue_count++;
+                }
+            }
+        }
+        System.out.println("Red count: " + red_count);
+        System.out.println("Blue count: " + blue_count);
+        if (red_count > blue_count) {
+            System.out.println("Red wins");
+        } else if (blue_count > red_count) {
+            System.out.println("Blue wins");
+        } else {
+            System.out.println("Tie");
+        }
+    }
+
+    private void set(int x, int y, Piece piece) {
+        board[x][y] = piece;
+    }
+
+    private void init_board(int side_len) {
+        side = side_len;
+
+        board = new Piece[side][side];
+        for(int i = 0; i < side; i++) {
+            for(int j = 0; j < side; j++) {
+                board[i][j] = Piece.EMPTY;
+            }
+        }
+
+        board[0][0] = Piece.RED;
+        board[0][side-1] = Piece.BLUE;
+        board[side-1][0] = Piece.BLUE;
+        board[side-1][side-1] = Piece.RED;
+    }
+
+    Piece get(int x, int y) {
+        return board[x][y];
+    }
+
+    Piece get(Coordinate index) {
+        return board[index.x][index.y];
+    }
+
+    Piece whoseturn() {
+        return whoseturn;
+    }
+
+    private Piece[][] matrix_copy(Piece[][] original) {
+        Piece[][] b = new Piece[side][side];
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
+                b[i][j] = original[i][j];
+            }
+        }
+        return b;
     }
 
     private boolean in_bounds(int x, int y) {
@@ -226,33 +268,6 @@ public class Board {
         return true;
     }
 
-    void declare_winner() {
-        int red_count = 0;
-        int blue_count = 0;
-        for (int i = 0; i < side; i++) {
-            for (int j = 0; j < side; j++) {
-                if (get(i, j) == Piece.RED) {
-                    red_count++;
-                } else if (get(i, j) == Piece.BLUE) {
-                    blue_count++;
-                }
-            }
-        }
-        System.out.println("Red count: " + red_count);
-        System.out.println("Blue count: " + blue_count);
-        if (red_count > blue_count) {
-            System.out.println("Red wins");
-        } else if (blue_count > red_count) {
-            System.out.println("Blue wins");
-        } else {
-            System.out.println("Tie");
-        }
-    }
-
-    Piece whoseturn() {
-        return whoseturn;
-    }
-
     int length() {
         return side;
     }
@@ -273,16 +288,6 @@ public class Board {
             }
         }
         return current_score;
-    }
-
-    private Piece[][] matrix_copy(Piece[][] original) {
-        Piece[][] b = new Piece[side][side];
-        for (int i = 0; i < side; i++) {
-            for (int j = 0; j < side; j++) {
-                b[i][j] = original[i][j];
-            }
-        }
-        return b;
     }
 
 }

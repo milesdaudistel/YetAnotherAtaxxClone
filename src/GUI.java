@@ -76,13 +76,12 @@ public class GUI extends JPanel implements MouseListener {
             board.update(new Move(from, selected));
             from = null;
             repaint();
+            if (useAI) {
+                board.call_AI();
+                repaint();
+            }
         } else if (from.equals(selected)) {
             from = null;
-            repaint();
-        }
-
-        if (useAI) {
-            board.call_AI();
             repaint();
         }
 

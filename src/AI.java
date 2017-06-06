@@ -4,7 +4,7 @@
 public class AI {
     private static final int max = Integer.MAX_VALUE;
     private static final int min = Integer.MIN_VALUE;
-    private static final int max_depth = 8;
+    private static final int max_depth = 20;
     
     static Move find_move(Board original) {
         Board board = new Board(original);

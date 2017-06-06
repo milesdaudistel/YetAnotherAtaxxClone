@@ -4,6 +4,7 @@
     <list default="true" id="0c2394e3-b2cd-4e0c-a1ed-721a22023cd3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AI.java" afterPath="$PROJECT_DIR$/src/AI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ataxx.java" afterPath="$PROJECT_DIR$/src/Ataxx.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Board.java" afterPath="$PROJECT_DIR$/src/Board.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.java" afterPath="$PROJECT_DIR$/src/GUI.java" />
     </list>
@@ -22,8 +23,11 @@
         <entry file="file://$PROJECT_DIR$/src/Ataxx.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-              <folding />
+              <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+              <folding>
+                <element signature="e#202#203#0" expanded="true" />
+                <element signature="e#260#261#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,16 +45,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="85" column="22" lean-forward="false" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="22" />
+            <state relative-caret-position="246">
+              <caret line="80" column="26" lean-forward="true" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#3940#3941#0" expanded="true" />
-                <element signature="e#3995#3996#0" expanded="true" />
+                <element signature="e#3955#3956#0" expanded="true" />
+                <element signature="e#4010#4011#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,31 +94,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="175" column="38" lean-forward="false" selection-start-line="175" selection-start-column="38" selection-end-line="175" selection-end-column="38" />
+            <state relative-caret-position="448">
+              <caret line="291" column="4" lean-forward="false" selection-start-line="291" selection-start-column="4" selection-end-line="291" selection-end-column="4" />
               <folding>
                 <element signature="method#Board#0;class#Board#0" expanded="false" />
                 <element signature="method#Board#1;class#Board#0" expanded="false" />
                 <element signature="method#Board#2;class#Board#0" expanded="false" />
                 <element signature="method#Board#3;class#Board#0" expanded="false" />
-                <element signature="method#init_board#0;class#Board#0" expanded="false" />
                 <element signature="method#print#0;class#Board#0" expanded="false" />
                 <element signature="method#update#0;class#Board#0" expanded="false" />
-                <element signature="e#4356#4357#0" expanded="true" />
-                <element signature="e#4401#4402#0" expanded="true" />
+                <element signature="method#update_AI#0;class#Board#0" expanded="false" />
+                <element signature="method#call_AI#0;class#Board#0" expanded="false" />
                 <element signature="method#undo#0;class#Board#0" expanded="false" />
+                <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
+                <element signature="method#init_board#0;class#Board#0" expanded="false" />
+                <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
                 <element signature="method#is_jump#0;class#Board#0" expanded="false" />
                 <element signature="method#valid_move#0;class#Board#0" expanded="false" />
                 <element signature="method#valid_move_distance#0;class#Board#0" expanded="false" />
                 <element signature="method#game_over#0;class#Board#0" expanded="false" />
-                <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
                 <element signature="method#get_score#0;class#Board#0" expanded="false" />
-                <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
-                <marker date="1496786010644" expanded="false" signature="6788:6799" ph=" { " />
-                <marker date="1496786010644" expanded="false" signature="6836:6842" ph=" }" />
+                <marker date="1496790190507" expanded="false" signature="7259:7270" ph=" { " />
+                <marker date="1496790190507" expanded="false" signature="7307:7313" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -123,8 +127,8 @@
       <file leaf-file-name="AI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+            <state relative-caret-position="93">
+              <caret line="17" column="50" lean-forward="true" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -226,12 +230,12 @@
         <option value="$PROJECT_DIR$/src/MyException.java" />
         <option value="$PROJECT_DIR$/src/Command.java" />
         <option value="$PROJECT_DIR$/src/Game.java" />
-        <option value="$PROJECT_DIR$/src/Ataxx.java" />
         <option value="$PROJECT_DIR$/src/Coordinate.java" />
         <option value="$PROJECT_DIR$/src/GameTest.java" />
+        <option value="$PROJECT_DIR$/src/Ataxx.java" />
         <option value="$PROJECT_DIR$/src/AI.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/GUI.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
       </list>
     </option>
   </component>
@@ -725,7 +729,14 @@
       <option name="project" value="LOCAL" />
       <updated>1496782296261</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="AI first trial">
+      <created>1496786203221</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1496786203221</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -838,11 +849,12 @@
     <MESSAGE value="jebaited again" />
     <MESSAGE value="slightly cleaned up" />
     <MESSAGE value="started AI implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="started AI implementation" />
+    <MESSAGE value="AI first trial" />
+    <option name="LAST_COMMIT_MESSAGE" value="AI first trial" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -880,7 +892,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -910,21 +925,21 @@
             <element signature="method#Board#1;class#Board#0" expanded="false" />
             <element signature="method#Board#2;class#Board#0" expanded="false" />
             <element signature="method#Board#3;class#Board#0" expanded="false" />
-            <element signature="method#init_board#0;class#Board#0" expanded="false" />
             <element signature="method#print#0;class#Board#0" expanded="false" />
             <element signature="method#update#0;class#Board#0" expanded="false" />
-            <element signature="e#4356#4357#0" expanded="true" />
-            <element signature="e#4401#4402#0" expanded="true" />
+            <element signature="method#update_AI#0;class#Board#0" expanded="false" />
+            <element signature="method#call_AI#0;class#Board#0" expanded="false" />
             <element signature="method#undo#0;class#Board#0" expanded="false" />
+            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
+            <element signature="method#init_board#0;class#Board#0" expanded="false" />
+            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
             <element signature="method#is_jump#0;class#Board#0" expanded="false" />
             <element signature="method#valid_move#0;class#Board#0" expanded="false" />
             <element signature="method#valid_move_distance#0;class#Board#0" expanded="false" />
             <element signature="method#game_over#0;class#Board#0" expanded="false" />
-            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
             <element signature="method#get_score#0;class#Board#0" expanded="false" />
-            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
-            <marker date="1496786010644" expanded="false" signature="6788:6799" ph=" { " />
-            <marker date="1496786010644" expanded="false" signature="6836:6842" ph=" }" />
+            <marker date="1496790190507" expanded="false" signature="7259:7270" ph=" { " />
+            <marker date="1496790190507" expanded="false" signature="7307:7313" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -960,7 +975,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -990,21 +1008,21 @@
             <element signature="method#Board#1;class#Board#0" expanded="false" />
             <element signature="method#Board#2;class#Board#0" expanded="false" />
             <element signature="method#Board#3;class#Board#0" expanded="false" />
-            <element signature="method#init_board#0;class#Board#0" expanded="false" />
             <element signature="method#print#0;class#Board#0" expanded="false" />
             <element signature="method#update#0;class#Board#0" expanded="false" />
-            <element signature="e#4356#4357#0" expanded="true" />
-            <element signature="e#4401#4402#0" expanded="true" />
+            <element signature="method#update_AI#0;class#Board#0" expanded="false" />
+            <element signature="method#call_AI#0;class#Board#0" expanded="false" />
             <element signature="method#undo#0;class#Board#0" expanded="false" />
+            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
+            <element signature="method#init_board#0;class#Board#0" expanded="false" />
+            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
             <element signature="method#is_jump#0;class#Board#0" expanded="false" />
             <element signature="method#valid_move#0;class#Board#0" expanded="false" />
             <element signature="method#valid_move_distance#0;class#Board#0" expanded="false" />
             <element signature="method#game_over#0;class#Board#0" expanded="false" />
-            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
             <element signature="method#get_score#0;class#Board#0" expanded="false" />
-            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
-            <marker date="1496786010644" expanded="false" signature="6788:6799" ph=" { " />
-            <marker date="1496786010644" expanded="false" signature="6836:6842" ph=" }" />
+            <marker date="1496790190507" expanded="false" signature="7259:7270" ph=" { " />
+            <marker date="1496790190507" expanded="false" signature="7307:7313" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -1040,7 +1058,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1103,7 +1124,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1166,7 +1190,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1229,7 +1256,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1273,14 +1303,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ataxx.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-521">
@@ -1317,51 +1339,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AI.java">
+    <entry file="file://$PROJECT_DIR$/src/Ataxx.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="175" column="38" lean-forward="false" selection-start-line="175" selection-start-column="38" selection-end-line="175" selection-end-column="38" />
+        <state relative-caret-position="136">
+          <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
           <folding>
-            <element signature="method#Board#0;class#Board#0" expanded="false" />
-            <element signature="method#Board#1;class#Board#0" expanded="false" />
-            <element signature="method#Board#2;class#Board#0" expanded="false" />
-            <element signature="method#Board#3;class#Board#0" expanded="false" />
-            <element signature="method#init_board#0;class#Board#0" expanded="false" />
-            <element signature="method#print#0;class#Board#0" expanded="false" />
-            <element signature="method#update#0;class#Board#0" expanded="false" />
-            <element signature="e#4356#4357#0" expanded="true" />
-            <element signature="e#4401#4402#0" expanded="true" />
-            <element signature="method#undo#0;class#Board#0" expanded="false" />
-            <element signature="method#is_jump#0;class#Board#0" expanded="false" />
-            <element signature="method#valid_move#0;class#Board#0" expanded="false" />
-            <element signature="method#valid_move_distance#0;class#Board#0" expanded="false" />
-            <element signature="method#game_over#0;class#Board#0" expanded="false" />
-            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
-            <element signature="method#get_score#0;class#Board#0" expanded="false" />
-            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
-            <marker date="1496786010644" expanded="false" signature="6788:6799" ph=" { " />
-            <marker date="1496786010644" expanded="false" signature="6836:6842" ph=" }" />
+            <element signature="e#202#203#0" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="85" column="22" lean-forward="false" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="22" />
+        <state relative-caret-position="246">
+          <caret line="80" column="26" lean-forward="true" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#3940#3941#0" expanded="true" />
-            <element signature="e#3995#3996#0" expanded="true" />
+            <element signature="e#3955#3956#0" expanded="true" />
+            <element signature="e#4010#4011#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="17" column="50" lean-forward="true" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="291" column="4" lean-forward="false" selection-start-line="291" selection-start-column="4" selection-end-line="291" selection-end-column="4" />
+          <folding>
+            <element signature="method#Board#0;class#Board#0" expanded="false" />
+            <element signature="method#Board#1;class#Board#0" expanded="false" />
+            <element signature="method#Board#2;class#Board#0" expanded="false" />
+            <element signature="method#Board#3;class#Board#0" expanded="false" />
+            <element signature="method#print#0;class#Board#0" expanded="false" />
+            <element signature="method#update#0;class#Board#0" expanded="false" />
+            <element signature="method#update_AI#0;class#Board#0" expanded="false" />
+            <element signature="method#call_AI#0;class#Board#0" expanded="false" />
+            <element signature="method#undo#0;class#Board#0" expanded="false" />
+            <element signature="method#declare_winner#0;class#Board#0" expanded="false" />
+            <element signature="method#init_board#0;class#Board#0" expanded="false" />
+            <element signature="method#matrix_copy#0;class#Board#0" expanded="false" />
+            <element signature="method#is_jump#0;class#Board#0" expanded="false" />
+            <element signature="method#valid_move#0;class#Board#0" expanded="false" />
+            <element signature="method#valid_move_distance#0;class#Board#0" expanded="false" />
+            <element signature="method#game_over#0;class#Board#0" expanded="false" />
+            <element signature="method#get_score#0;class#Board#0" expanded="false" />
+            <marker date="1496790190507" expanded="false" signature="7259:7270" ph=" { " />
+            <marker date="1496790190507" expanded="false" signature="7307:7313" ph=" }" />
           </folding>
         </state>
       </provider>
