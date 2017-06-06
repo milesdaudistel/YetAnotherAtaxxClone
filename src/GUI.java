@@ -19,6 +19,8 @@ public class GUI extends JPanel implements MouseListener {
 
     private int piece_diameter;
 
+    private boolean useAI;
+
     private GUI(int board_length) {
         super(new GridLayout(board_length, board_length));
 
@@ -27,19 +29,36 @@ public class GUI extends JPanel implements MouseListener {
         board = new Board(board_length);
         addMouseListener(this);
 
+        useAI = false;
+    }
+
+    private GUI(int board_length, boolean AI) {
+        super(new GridLayout(board_length, board_length));
+
+        side = board_length;
+        from = null;
+        board = new Board(board_length);
+        addMouseListener(this);
+
+        useAI = AI;
     }
 
 
 
 
-    static void make_GUI(int n, int width) {
+    static void make_GUI(int n, int width, boolean AI) {
         //pack lets the layout manager take care of sizing
         //you can either setpreferredsize and then pack, or explicity setsize and dont pack
         JFrame jframe = new JFrame("Ataxx");
         jframe.setPreferredSize(new Dimension(width, width));
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GUI gui = new GUI(n);
+        GUI gui;
+        if (AI) {
+            gui = new GUI(n, AI);
+        } else {
+            gui = new GUI(n);
+        }
         jframe.getContentPane().add(gui);
         jframe.setResizable(false);
         jframe.pack();
@@ -59,6 +78,11 @@ public class GUI extends JPanel implements MouseListener {
             repaint();
         } else if (from.equals(selected)) {
             from = null;
+            repaint();
+        }
+
+        if (useAI) {
+            board.call_AI();
             repaint();
         }
 

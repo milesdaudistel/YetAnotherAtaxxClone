@@ -117,7 +117,10 @@ public class Board {
     }
 
     void update(Move move) {
-        can_move(move);
+        if (!valid_move(move)) {
+            return;
+        }
+
         int tx = move.to.x;
         int ty = move.to.y;
 
@@ -145,7 +148,6 @@ public class Board {
     }
 
     void update_AI(Move move) {
-        can_move(move);
         boards.push(board);
         board = java.util.Arrays.copyOf(board, board.length);
         int tx = move.to.x;
@@ -170,6 +172,10 @@ public class Board {
         whoseturn = whoseturn.opposite();
     }
 
+    void call_AI() {
+        update_AI(AI.find_move(this));
+    }
+
     void undo() {
         board = boards.pop();
         whoseturn = whoseturn.opposite();
@@ -184,17 +190,12 @@ public class Board {
         return Math.abs(dxdy.x) == 2 || Math.abs(dxdy.y) == 2;
     }
 
-    private void can_move(Move move) {
-        if (!in_bounds(move.from.x, move.from.y) ||
-                !in_bounds(move.to.x, move.to.y) ) {
-            throw error("move out of bounds");
-        } else if (get(move.from.x, move.from.y) != whoseturn) {
-            throw error("that is not your piece");
-        } else if (!valid_move_distance(move)) {
-            throw error("move distance invalid");
-        } else if (!(get(move.to.x, move.to.y) == Piece.EMPTY)) {
-            throw error("that move destination is not empty");
-        }
+    boolean valid_move(Move move) {
+        return in_bounds(move.from.x, move.from.y) &&
+                in_bounds(move.to.x, move.to.y) &&
+                get(move.from.x, move.from.y) == whoseturn &&
+                get(move.to.x, move.to.y) == Piece.EMPTY &&
+                valid_move_distance(move);
     }
 
     private boolean valid_move_distance(Move move) {
@@ -260,7 +261,7 @@ public class Board {
         return new RuntimeException(message);
     }
 
-    int current_score() {
+    int get_score() {
         int current_score = 0;
         for (int i = 0; i < side; i++) {
             for (int j = 0; j < side; j++) {
