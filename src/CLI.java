@@ -9,6 +9,7 @@ public class CLI {
     private Board b;
     private Mode mode;
     private Scanner sc;
+    private boolean playAI;
 
 
     enum Mode {
@@ -18,10 +19,15 @@ public class CLI {
     }
 
     CLI() {
+        this(false);
+    }
+
+    CLI(boolean opponent_is_AI) {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board();
         process();
+        playAI = opponent_is_AI;
     }
 
     CLI(String[] sb) {
@@ -67,6 +73,7 @@ public class CLI {
                             b.declare_winner();
                             mode = Mode.MENU;
                         }
+                        b.call_AI();
                     } catch (RuntimeException e) {
                         System.out.println(e);
                     }

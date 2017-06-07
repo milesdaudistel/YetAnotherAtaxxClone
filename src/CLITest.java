@@ -28,7 +28,7 @@ public class CLITest extends CLI {
     }
 
     public static void main(String[] args) {
-        randomtest();
+        test1();
     }
 
     static boolean test_square(String[] board) {

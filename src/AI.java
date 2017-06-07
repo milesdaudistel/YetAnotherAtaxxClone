@@ -23,6 +23,7 @@ public class AI {
                             Move current_move = new Move(i, j, i+x, j+y);
                             if (board.valid_move(current_move)) {
                                 board.update_AI(current_move);
+                                board.print();
                                 int current_move_score = find_move_score(board, max_depth);
                                 if (current_move_score < best_score) {
                                     best_move = current_move;
