@@ -26,14 +26,16 @@ public class CLI {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board();
-        process();
         playAI = opponent_is_AI;
+        process();
+
     }
 
-    CLI(String[] sb) {
+    CLI(String[] sb, boolean opponent_is_AI) {
         this.sc = new Scanner(System.in);
         this.mode = Mode.MENU;
         start_board = new Board(sb);
+        playAI = opponent_is_AI;
         process();
     }
 
@@ -73,7 +75,10 @@ public class CLI {
                             b.declare_winner();
                             mode = Mode.MENU;
                         }
-                        b.call_AI();
+                        if (playAI) {
+                            b.call_AI();
+                            b.print();
+                        }
                     } catch (RuntimeException e) {
                         System.out.println(e);
                     }
@@ -92,6 +97,9 @@ public class CLI {
                 case "quit":
                     quit();
                     System.out.println("leaving current game");
+                    break;
+                case "gameover":
+                    System.out.println(b.game_over());
                     break;
                 default:
                     System.out.println("invalid command");

@@ -43,9 +43,6 @@ public class GUI extends JPanel implements MouseListener {
         useAI = AI;
     }
 
-
-
-
     static void make_GUI(int n, int width, boolean AI) {
         //pack lets the layout manager take care of sizing
         //you can either setpreferredsize and then pack, or explicity setsize and dont pack
@@ -76,11 +73,13 @@ public class GUI extends JPanel implements MouseListener {
             board.update(new Move(from, selected));
             from = null;
             repaint();
+
             if (useAI) {
                 board.call_AI();
                 repaint();
             }
-        } else if (from.equals(selected)) {
+
+        } else if (from != null && from.equals(selected)) {
             from = null;
             repaint();
         }

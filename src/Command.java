@@ -13,6 +13,7 @@ public class Command {
     private static final Pattern turn = Pattern.compile("turn$");
     private static final Pattern print = Pattern.compile("print$");
     private static final Pattern quit = Pattern.compile("quit$");
+    private static final Pattern gameover = Pattern.compile("gameover$");
 
     public Command(String t, String[] a) {
         //parse the string, separating it into TYPE and args
@@ -39,6 +40,8 @@ public class Command {
             return new Command("print", null);
         } else if (quit.matcher(c).matches()) {
             return new Command("quit", null);
+        } else if (gameover.matcher(c).matches()) {
+            return new Command("gameover", null);
         } else {
             return new Command("invalid", null);
         }

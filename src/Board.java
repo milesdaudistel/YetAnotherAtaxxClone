@@ -2,25 +2,28 @@
  * Created by miles on 5/24/17.
  */
 import java.util.Stack;
+import java.util.ArrayList;
 
 public class Board {
     private Piece[][] board; //contains the pieces
     private Stack<Piece[][]> boards;
+    private ArrayList<Coordinate> reds;
+    private ArrayList<Coordinate> blues;
     private int side; //the length of the playable board
+    private static int standard_side = 8;
     private Piece whoseturn;
 
-    Board() {
-        init_board(8);
-
+    Board(int board_length) {
+        side = board_length;
+        init_board(side);
         whoseturn = Piece.RED;
-        //boards = new Stack<Piece[][]>();
+        boards = new Stack<Piece[][]>();
+        reds = new ArrayList<>(side * side);
+        blues = new ArrayList<>(side * side);
     }
 
-    Board(int board_length) {
-        init_board(board_length);
-
-        whoseturn = Piece.RED;
-        //boards = new Stack<Piece[][]>();
+    Board() {
+        init_board(standard_side);
     }
 
     Board(String[] b) {
@@ -48,7 +51,9 @@ public class Board {
         }
 
         whoseturn = Piece.RED;
-        //boards = new Stack<Piece[][]>();
+        boards = new Stack<Piece[][]>();
+        reds = new ArrayList<>(side * side);
+        blues = new ArrayList<>(side * side);
     }
 
     Board(Board original) {
@@ -56,6 +61,8 @@ public class Board {
         whoseturn = original.whoseturn;
         board = matrix_copy(original.board);
         boards = new Stack<Piece[][]>();
+        reds = new ArrayList<>(side * side);
+        blues = new ArrayList<>(side * side);
     }
 
     void print() {
@@ -124,7 +131,8 @@ public class Board {
 
     void update_AI(Move move) {
         boards.push(board);
-        board = java.util.Arrays.copyOf(board, board.length);
+        //board = java.util.Arrays.copyOf(board, board.length);
+        board = matrix_copy(board);
         int tx = move.to.x;
         int ty = move.to.y;
 
@@ -232,12 +240,13 @@ public class Board {
     }
 
     boolean game_over() {
-        for (int i = 2; i < side-2; i++) {
-            for (int j = 2; j < side-2; j++) {
+        for (int i = 0; i < side; i++) {
+            for (int j = 0; j < side; j++) {
                 if (get(i, j) == Piece.EMPTY) {
                     for (int x = -2; x <= 2; x++) {
                         for (int y = -2; y <= 2; y++) {
-                            if (get(i+x, j+y) == whoseturn) {
+                            if (in_bounds(i+x, j+y) &&
+                                    get(i+x, j+y) == whoseturn) {
                                 return false;
                             }
                         }
@@ -284,10 +293,6 @@ public class Board {
             }
         }
         return current_score;
-    }
-
-    private RuntimeException error(String message) {
-        return new RuntimeException(message);
     }
 
 }
